@@ -7,7 +7,7 @@ var config = {
     projectId: "my-messenger-bff9d",
     storageBucket: "my-messenger-bff9d.appspot.com",
     messagingSenderId: "940703013395"
-  };
+};
 firebase.initializeApp(config);
 
 export default firebase;
