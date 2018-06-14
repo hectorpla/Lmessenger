@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 var config = {
     apiKey: "AIzaSyDJntUPw_kEEXckFaxFGvfgfRGE06POfnk",
@@ -8,6 +8,8 @@ var config = {
     storageBucket: "my-messenger-bff9d.appspot.com",
     messagingSenderId: "940703013395"
 };
-firebase.initializeApp(config);
 
 export default firebase;
+
+const firebaseApp = firebase.initializeApp(config);
+export { firebaseApp };

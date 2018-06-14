@@ -10,14 +10,15 @@ class DashBoard extends Component {
     constructor() {
         super();
         this.state = {
-            signStatus: 'signed in'
+            isSignedIn: undefined
         }
     }
 
     render() {
-        alert(this.props.auth.currentUser);
+        console.log(this.state);
+        alert("DashBoard:", this.props.auth.currentUser);
         return (
-            this.props.auth.currentUser ?
+            this.state.isSignedIn === undefined || this.state.isSignedIn ?
             this.renderDashBoard()
             :
             <Redirect to="/signin"/>
@@ -25,7 +26,7 @@ class DashBoard extends Component {
     }
 
     signOut() {
-        this.auth.signOut()
+        this.props.auth.signOut()
             .then(() => console.log("user signed out"))
             .then((err) => console.log(err));
     }
@@ -34,25 +35,27 @@ class DashBoard extends Component {
         // TODO: log out feature
         return (
             <div >
-                <button onClick={this.signOut}> sign out </button>
-                <p> {this.state.signStatus} </p>
+                <button onClick={() => this.signOut()}> sign out </button>
+                <p> {this.state.isSignedIn === undefined ?
+                        "Undefined" : (this.state.isSignedIn ? 
+                            "Signed in" : "Signed out")} 
+                </p>
             </div>
         )
     }
 
-    // good timing?
-    // componentDidMount() {
-    //     this.auth = this.props.auth;
-    //     this.auth.onAuthStateChanged((user) => {
-    //         if (user) {
-    //             this.setState({signStatus: "signed in"})
-    //         } else {
-    //             this.setState({signStatus: "signed out"});
-    //         }
-    //     }, (error) => {
-    //         console.log(error);
-    //     });
-    // }
+    componentDidMount() {        
+        this.unregisterAuthSubscriber = this.props.auth.onAuthStateChanged((user) => {
+            console.log(user);
+                this.setState({isSignedIn: !!user})
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    componentWillUnmount() {
+        this.unregisterAuthSubscriber();
+    }
 }
 
 export default DashBoard;

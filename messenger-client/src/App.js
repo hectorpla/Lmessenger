@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import firebase from './firebase'; // should do only once in the app
 import { Switch, Route } from 'react-router-dom';
+
+// firebase
+import firebase, { firebaseApp } from './firebase'; // should do only once in the app
+import 'firebase/auth';
+import FireBaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import Siginin from './Signin/Signin';
 import DashBoard from './DashBoard/DashBoard';
@@ -8,24 +12,21 @@ import DashBoard from './DashBoard/DashBoard';
 class App extends Component {
     constructor() {
         super();
-        this.auth = firebase.auth();
-    }
-
-    render() {
-        const that = this;
-        const uiConfig = {
+        // this.auth = firebaseApp.auth();
+        
+        this.uiConfig = {
             callbacks: {
-                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                signInSuccessWithAuthResult: (authResult, redirectUrl) => {
                     console.log(authResult);
-                    alert(that.auth.currentUser);
+                    alert("App:", firebaseApp.auth().currentUser);
                     return true;
                 },
                 uiShown: function() {
-                // tricky here: cannot control the signin page
+                    // tricky here: cannot control the signin page
                 }
             },
             // Will use popup for ID Providers sign-in flow instead of the default, redirect.
-            signInFlow: 'default',
+            signInFlow: 'popup',
             signInSuccessUrl: '/',
             signInOptions: [
                 firebase.auth.EmailAuthProvider.PROVIDER_ID
@@ -33,15 +34,32 @@ class App extends Component {
             // Terms of service url.
             tosUrl: 'unknown/'
         };
+    }
 
+    render() {
         return (
             <Switch>
-                <Route exact path='/' render={() => <DashBoard auth={this.auth}/>} />
-                <Route exact path='/signin' render={() => <Siginin auth={this.auth} 
-                    uiConfig={uiConfig}/>} />
+                <Route exact path='/' render={() => <DashBoard auth={firebaseApp.auth()}/>} />
+                <Route exact path='/signin' render={() => this.renderSignIn()} />
                 <Route to="/signin" />
             </Switch>
         )
+    }
+
+    // use of the official react-firebase-ui
+    // weird error: app undefined, seems to initialize the firebase again
+    // TODO: test it again
+    renderSignInLib() {
+        return (
+            <FireBaseAuth fireBaseAuth={firebaseApp.auth()} uiConfig={this.uiConfig}/>
+        )
+    }
+
+    // mind the context of the function, this.renderSignIn would lose context 
+    renderSignIn() {
+        return (
+            <Siginin auth={firebaseApp.auth()} uiConfig={this.uiConfig}/>
+        );
     }
 }
 
