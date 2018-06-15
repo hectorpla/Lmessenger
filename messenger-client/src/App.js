@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 // firebase
 import firebase, { firebaseApp } from './firebase'; // should do only once in the app
-import 'firebase/auth';
 import FireBaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import Siginin from './Signin/Signin';

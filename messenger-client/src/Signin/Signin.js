@@ -1,21 +1,23 @@
+// @flow
 import React, { Component } from 'react';
-// import { Browserhistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
 
 import firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
 
-class Signin extends Component {
-    static propTypes = {
-        auth: PropTypes.object.isRequired,
-        uiConfig: PropTypes.object.isRequired
-    }
+type Props = {
+    auth: firebase.auth.Auth,
+    uiConfig: Object
+}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          loadMessage: "Loading Sign UI...",
-        }
+type States = {
+    loadMessage: string
+}
+
+class Signin extends Component<Props, States> {
+
+    state = {
+        loadMessage: "Loading Sign UI...",
     }
     
     render() {
@@ -29,7 +31,7 @@ class Signin extends Component {
     }
 
     componentDidMount() {
-        // TODO: act purely to props
+        // TODO: act purely to props? internal states change of the auth instance
         const ui = new firebaseui.auth.AuthUI(this.props.auth);
         ui.start("#auth-container", this.props.uiConfig);
     }

@@ -1,22 +1,27 @@
+// @flow
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
 
-class DashBoard extends Component {
-    static propTypes = {
-        auth: PropTypes.object.isRequired
-    }
+type Props = {
+    auth: firebase.auth.Auth
+}
 
-    constructor() {
-        super();
-        this.state = {
-            isSignedIn: undefined
-        }
-    }
+type States = {
+    isSignedIn: ?boolean
+}
+
+class DashBoard extends Component<Props, States> {
+
+    state = {
+        isSignedIn: undefined
+    };
+    unregisterAuthSubscriber: () => void
+
 
     render() {
-        console.log(this.state);
-        alert("DashBoard:", this.props.auth.currentUser);
+        // console.log(this.state);
+        // alert("DashBoard:", this.props.auth.currentUser);
         return (
             this.state.isSignedIn === undefined || this.state.isSignedIn ?
             this.renderDashBoard()
@@ -32,7 +37,7 @@ class DashBoard extends Component {
     }
 
     renderDashBoard() {
-        // TODO: log out feature
+        // TODO: compose chat room component
         return (
             <div >
                 <button onClick={() => this.signOut()}> sign out </button>
@@ -47,7 +52,15 @@ class DashBoard extends Component {
     componentDidMount() {        
         this.unregisterAuthSubscriber = this.props.auth.onAuthStateChanged((user) => {
             console.log(user);
-                this.setState({isSignedIn: !!user})
+
+            // TODO: Connect or disconnect websocket to the server
+            if (user) {
+
+            } else {
+
+            }
+
+            this.setState({isSignedIn: !!user})
         }, (error) => {
             console.log(error);
         });
