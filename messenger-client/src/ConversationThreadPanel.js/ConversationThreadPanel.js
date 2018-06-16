@@ -1,15 +1,18 @@
 // @flow
 import React, { Component } from 'react';
-import InputSection from '../InputSection/InputSection';
+import ConversationThreadInputSection from '../ConversationThreadInputSection/ConversationThreadInputSection';
 import ConversationThreadTable from '../ConversationThreadTable/ConversationThreadTable';
+import './ConversationThreadPanel.css';
+
+import _ from 'lodash';
 
 type Props = {
-    receivers: string[],
     onActiveReceiverChange: (string) => void
 }
 
 type States = {
-    inputText: string
+    inputText: string,
+    receivers: string[]
 }
 
 /*
@@ -17,11 +20,31 @@ type States = {
 */
 class ConversationThreadPanel extends Component<Props, States> {
     state = {
-        inputText: ""
+        inputText: "",
+        receivers: []
     }
 
     handleInputTextChange = function(text: string) {
         this.setState({inputText: text})
+    }.bind(this);
+
+    handleReceiverAddtion = function(text: string) {
+        const receivers = this.state.receivers;
+        
+        if (receivers.includes(text)) {
+            // TODO: check duplication in UI
+            console.log("addition: duplicatino!")
+            return;
+        }
+        receivers.push(text);
+        // ?? work?
+        this.setState({receivers});
+    }.bind(this);
+
+    handleReceiverDelete = function(name: string) {
+        const receivers = this.state.receivers;
+        _.remove(receivers, (toRemove) => toRemove === name);
+        this.setState({receivers})
     }.bind(this);
 
     // TODO: implementation: inform the parent component
@@ -31,12 +54,14 @@ class ConversationThreadPanel extends Component<Props, States> {
 
     render() {
         return (
-            <div className="container">
-                <InputSection inputText={this.state.inputText} 
-                    onInputTextChange={this.handleInputTextChange} />
+            <div className="container panel blue darken-2">
+                <ConversationThreadInputSection inputText={this.state.inputText} 
+                    onInputTextChange={this.handleInputTextChange}
+                    onReceiverAddition={this.handleReceiverAddtion} />
                 <ConversationThreadTable
+                    receivers={this.state.receivers}
                     onActiveReceiverChange={this.handleActiveReceiverChange}
-                    receivers={this.props.receivers} />
+                    onReceiverDelete={this.handleReceiverDelete} />
             </div>
         );
     }

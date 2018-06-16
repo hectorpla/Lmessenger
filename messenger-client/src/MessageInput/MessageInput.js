@@ -22,7 +22,7 @@ class MessageInput extends Component<Props> {
     render() {
         return (
             <form onSubmit={this.handleFormSubmit}>
-                <input type="text" onKeyUp={this.handleKeyUp}/>
+                <input type="text" placeholder="type message..." onKeyUp={this.handleKeyUp}/>
             </form>
         );
     }

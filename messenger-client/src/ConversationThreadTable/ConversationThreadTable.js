@@ -4,7 +4,8 @@ import ConversationThreadRow from '../ConversationThreadRow/ConversationThreadRo
 
 type Props = {
     receivers: string[],
-    onActiveReceiverChange: (string) => void
+    onActiveReceiverChange: (string) => void,
+    onReceiverDelete: (string) => void
 }
 
 /*
@@ -12,11 +13,13 @@ type Props = {
 */
 class ConversationThreadTable extends Component<Props> {
     
-    // TODO: implement delete row
+    // a delegate that go uppper
     handleThreadDelete = function(name: string) {
-        
+        this.props.onReceiverDelete(name);
     }.bind(this);
 
+    // TODO: make it scrollable
+    // TODO: attach key to each children
     render() {
         return (
             <div>
@@ -24,7 +27,7 @@ class ConversationThreadTable extends Component<Props> {
                 <div>
                     {this.props.receivers.map(name => 
                         <ConversationThreadRow receiverName={name} 
-                            onThreadDelete={this.handleThreadDelete} />
+                            onThreadDelete={this.handleThreadDelete}/>
                     )}
                 </div>
             </div>

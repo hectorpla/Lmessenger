@@ -16,6 +16,8 @@ class MessageTab extends Component<Props> {
         // As a last resort, you can pass an item’s index in the array as a key. 
         // This can work well if the items are never reordered, 
         // but reorders will be slow.
+
+        // TODO: make the view scrollable
         return (
             <div className="row">
                 {this.props.messages.map( (msg, index) => 

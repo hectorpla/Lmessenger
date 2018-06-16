@@ -5,11 +5,10 @@ import ConversationThreadPanel from '../ConversationThreadPanel.js/ConversationT
 import MessagePanel from '../MessagePanel/MessagePanel';
 
 type Props = {
-    // sokect: Socket
+    sokect: Socket
 }
 
 type States = {
-    receivers: string[],
     currentActiveReceiver: ?string
 }
 
@@ -33,7 +32,7 @@ class ControlPanel extends Component<Props, States> {
                 {/* TODO: left for messenger thread panel; right for chat panel (3:7) */}
                 <div className="row">
                     <div className="col s3">
-                        <ConversationThreadPanel receivers={this.state.receivers} 
+                        <ConversationThreadPanel
                             onActiveReceiverChange={this.handleActiveReceiverChange}/>
                     </div>
                     {/* chat panel */}
