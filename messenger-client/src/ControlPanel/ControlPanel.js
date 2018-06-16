@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
+import { Socket } from 'socket.io-client';
 import ConversationThreadPanel from '../ConversationThreadPanel.js/ConversationThreadPanel';
+import MessagePanel from '../MessagePanel/MessagePanel';
 
 type Props = {
-
+    // sokect: Socket
 }
 
 type States = {
@@ -36,7 +38,8 @@ class ControlPanel extends Component<Props, States> {
                     </div>
                     {/* chat panel */}
                     <div className="col s9">
-
+                        <MessagePanel currentActiveReceiver={this.state.currentActiveReceiver}
+                        socket={undefined} /> 
                     </div>
                 </div>
             </div>

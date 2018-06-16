@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import firebase from 'firebase/app';
+import ControlPanel from '../ControlPanel/ControlPanel';
 
 type Props = {
     auth: firebase.auth.Auth
@@ -39,12 +40,16 @@ class DashBoard extends Component<Props, States> {
     renderDashBoard() {
         // TODO: compose chat room component
         return (
-            <div >
-                <button onClick={() => this.signOut()}> sign out </button>
-                <p> {this.state.isSignedIn === undefined ?
-                        "Undefined" : (this.state.isSignedIn ? 
-                            "Signed in" : "Signed out")} 
-                </p>
+            <div className="container">
+                <div className="row">
+                    <button onClick={() => this.signOut()}> sign out </button>
+                    <span> {this.state.isSignedIn === undefined ?
+                            "Undefined" : (this.state.isSignedIn ? 
+                                "Signed in" : "Signed out")} 
+                    </span>
+                </div>
+                <hr />
+                <ControlPanel  />
             </div>
         )
     }

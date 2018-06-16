@@ -16,6 +16,9 @@ type States = {
 * A colume containing enterbar, thread table
 */
 class ConversationThreadPanel extends Component<Props, States> {
+    state = {
+        inputText: ""
+    }
 
     handleInputTextChange = function(text: string) {
         this.setState({inputText: text})
@@ -26,14 +29,16 @@ class ConversationThreadPanel extends Component<Props, States> {
         throw "not yet implemented";
     }.bind(this);
 
-    render = () => {
-        <div className="container">
-            <InputSection inputText={this.state.inputText} 
-                onInputTextChange={this.handleInputTextChange} />
-            <ConversationThreadTable
-                onActiveReceiverChange={this.handleActiveReceiverChange}
-                receivers={this.props.receivers} />
-        </div>
+    render() {
+        return (
+            <div className="container">
+                <InputSection inputText={this.state.inputText} 
+                    onInputTextChange={this.handleInputTextChange} />
+                <ConversationThreadTable
+                    onActiveReceiverChange={this.handleActiveReceiverChange}
+                    receivers={this.props.receivers} />
+            </div>
+        );
     }
 }
 
