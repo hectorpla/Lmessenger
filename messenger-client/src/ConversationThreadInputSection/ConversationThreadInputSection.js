@@ -24,12 +24,14 @@ class ConversationThreadInputSection extends Component<Props> {
 
     render() {
         return (
-            <form onSubmit={(e: SyntheticEvent<>) => e.preventDefault()}>
-                <input type="text" placeholder="Add a friend..." 
-                    value={this.props.inputText}
-                    onKeyUp={this.handleInputSubmit}
-                    onChange={this.handleTextChange} />
-            </form>
+            <div className="row">
+                <form onSubmit={(e: SyntheticEvent<>) => e.preventDefault()}>
+                    <input type="text" placeholder="Add a friend..." 
+                        value={this.props.inputText}
+                        onKeyUp={this.handleInputSubmit}
+                        onChange={this.handleTextChange} />
+                </form>
+            </div>
         );
     }
 }

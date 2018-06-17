@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 type Props = {
+    receiver: ?string,
     messages: string[]
 }
 
@@ -18,8 +19,10 @@ class MessageTab extends Component<Props> {
         // but reorders will be slow.
 
         // TODO: make the view scrollable
+        // TODO: add timestamp
         return (
             <div className="row">
+                <h3> Talking to {this.props.receiver} </h3>
                 {this.props.messages.map( (msg, index) => 
                     <p key={index}> {msg} </p>
                 )}

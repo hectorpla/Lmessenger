@@ -5,7 +5,8 @@ import ConversationThreadPanel from '../ConversationThreadPanel.js/ConversationT
 import MessagePanel from '../MessagePanel/MessagePanel';
 
 type Props = {
-    sokect: Socket
+    user: string,
+    sokect: ?Socket
 }
 
 type States = {
@@ -37,7 +38,8 @@ class ControlPanel extends Component<Props, States> {
                     </div>
                     {/* chat panel */}
                     <div className="col s9">
-                        <MessagePanel currentActiveReceiver={this.state.currentActiveReceiver}
+                        <MessagePanel user={this.props.user}
+                        currentActiveReceiver={this.state.currentActiveReceiver}
                         socket={undefined} /> 
                     </div>
                 </div>

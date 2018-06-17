@@ -22,8 +22,8 @@ class ConversationThreadTable extends Component<Props> {
     // TODO: attach key to each children
     render() {
         return (
-            <div>
-                <div> Threads going on </div>
+            <div className="row">
+                <div> Threads going on.. </div>
                 <div>
                     {this.props.receivers.map(name => 
                         <ConversationThreadRow receiverName={name} 

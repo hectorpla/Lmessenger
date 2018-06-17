@@ -37,7 +37,6 @@ class ConversationThreadPanel extends Component<Props, States> {
             return;
         }
         receivers.push(text);
-        // ?? work?
         this.setState({receivers});
     }.bind(this);
 
@@ -54,7 +53,7 @@ class ConversationThreadPanel extends Component<Props, States> {
 
     render() {
         return (
-            <div className="container panel blue darken-2">
+            <div className="container blue darken-1">
                 <ConversationThreadInputSection inputText={this.state.inputText} 
                     onInputTextChange={this.handleInputTextChange}
                     onReceiverAddition={this.handleReceiverAddtion} />

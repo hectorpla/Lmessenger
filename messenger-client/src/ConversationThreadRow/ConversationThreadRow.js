@@ -18,7 +18,9 @@ class ConversationThreadRow extends Component<Props> {
             <div>
                 <span> {this.props.receiverName} </span>
                 {/* pull right */}
-                <span onClick={this.handleThreadDelete}> del </span>
+                <a>
+                    <i className="material-icons" onClick={this.handleThreadDelete}>close</i>
+                </a>
             </div>
         )
     }
