@@ -6,7 +6,7 @@ import MessagePanel from '../MessagePanel/MessagePanel';
 
 type Props = {
     user: string,
-    sokect: ?Socket
+    sokect: Socket
 }
 
 type States = {
@@ -23,6 +23,7 @@ class ControlPanel extends Component<Props, States> {
     }
 
     handleActiveReceiverChange = function(name: string) {
+        console.log(`ControlPanel: active receiver changes to`, name);
         this.setState({currentActiveReceiver: name});
     }.bind(this);
 
@@ -30,17 +31,17 @@ class ControlPanel extends Component<Props, States> {
         // TODO: add CSS style lib: materialized css?
         return (
             <div className="container">
-                {/* TODO: left for messenger thread panel; right for chat panel (3:7) */}
                 <div className="row">
-                    <div className="col s3">
+                    <div className="col s4">
                         <ConversationThreadPanel
+                            activeReceiver={this.state.currentActiveReceiver}
                             onActiveReceiverChange={this.handleActiveReceiverChange}/>
                     </div>
-                    {/* chat panel */}
-                    <div className="col s9">
+                    {/* TODO: check socket */}
+                    <div className="col s8">
                         <MessagePanel user={this.props.user}
-                        currentActiveReceiver={this.state.currentActiveReceiver}
-                        socket={undefined} /> 
+                            receiver={this.state.currentActiveReceiver}
+                            socket={this.props.sokect} /> 
                     </div>
                 </div>
             </div>

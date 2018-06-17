@@ -7,8 +7,7 @@ import MessageInput from '../MessageInput/MessageInput';
 
 type Props = {
     user: string,
-    receiver?: string,
-    currentActiveReceiver: ?string,
+    receiver: ?string,
     socket: ?Socket
 }
 
@@ -31,10 +30,12 @@ class MessagePanel extends Component<Props, States> {
     }.bind(this);
 
     render() {
+        console.log(this.props.receiver);
         // TODO: check the input component logic
         return (
             <div className="container">
-                <MessageTab receiver={this.props.receiver} messages={this.state.messages} />
+                <MessageTab receiver={this.props.receiver} 
+                    messages={this.state.messages} />
                 { this.props.receiver && this.props.socket &&
                 <MessageInput user={this.props.user} receiver={this.props.receiver}
                     socket={this.props.socket}

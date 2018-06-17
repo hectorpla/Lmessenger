@@ -7,6 +7,7 @@ import './ConversationThreadPanel.css';
 import _ from 'lodash';
 
 type Props = {
+    activeReceiver: ?string,
     onActiveReceiverChange: (string) => void
 }
 
@@ -38,6 +39,8 @@ class ConversationThreadPanel extends Component<Props, States> {
         }
         receivers.push(text);
         this.setState({receivers});
+        // activate the added thread
+        this.handleActiveReceiverChange(text);
     }.bind(this);
 
     handleReceiverDelete = function(name: string) {
@@ -46,9 +49,8 @@ class ConversationThreadPanel extends Component<Props, States> {
         this.setState({receivers})
     }.bind(this);
 
-    // TODO: implementation: inform the parent component
     handleActiveReceiverChange = function(name: string) {
-        throw "not yet implemented";
+        this.props.onActiveReceiverChange(name);
     }.bind(this);
 
     render() {
@@ -59,6 +61,7 @@ class ConversationThreadPanel extends Component<Props, States> {
                     onReceiverAddition={this.handleReceiverAddtion} />
                 <ConversationThreadTable
                     receivers={this.state.receivers}
+                    activeReceiver={this.props.activeReceiver}
                     onActiveReceiverChange={this.handleActiveReceiverChange}
                     onReceiverDelete={this.handleReceiverDelete} />
             </div>
