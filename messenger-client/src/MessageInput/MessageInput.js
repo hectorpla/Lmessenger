@@ -10,7 +10,14 @@ type Props = {
     onMessageInputSubmit?: (string) => void
 }
 
+// TODO: currently using uncontrolled form, switch back when necessary
+// type States = {
+//     inputText: string
+// }
+
 class MessageInput extends Component<Props> {
+    inputRef = React.createRef();
+
     handleFormSubmit = function(e: SyntheticEvent<>) {
         e.preventDefault();
     }
@@ -23,7 +30,8 @@ class MessageInput extends Component<Props> {
             if (this.props.onMessageInputSubmit) {
                 this.props.onMessageInputSubmit(message);
             }
-            this.sendMessage(message);
+            // TODO: send message
+            // this.sendMessage(message);
         }
     }.bind(this);
 
@@ -33,10 +41,21 @@ class MessageInput extends Component<Props> {
         this.props.socket.emit("message", user, receiver, message);
     }
 
+    // access the current props via this.props and compare it with the incoming nextProps
+    // the component is already mounted when this mothod is called
+    componentWillReceiveProps(nextProps: Props) {
+        if (this.props.receiver !== nextProps.receiver) {
+            this.inputRef.current.value = ""; // solve the complaint by Flow
+        }
+    }
+
+    // official: ref updates happen before componentDidMount or componentDidUpdate lifecycle hooks.
     render() {
         return (
             <form onSubmit={this.handleFormSubmit}>
-                <input type="text" placeholder="type message..." onKeyUp={this.handleKeyUp}/>
+                <input type="text" ref={this.inputRef}
+                    placeholder="type message..." 
+                    onKeyUp={this.handleKeyUp}/>
             </form>
         );
     }
