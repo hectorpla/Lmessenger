@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import './ConversationThreadRow.css';
 
 type Props = {
     receiverName: string,
@@ -15,13 +16,11 @@ class ConversationThreadRow extends Component<Props> {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <span> {this.props.receiverName} </span>
-                {/* pull right */}
-                <a>
-                    <i className="material-icons" onClick={this.handleThreadDelete}>close</i>
-                </a>
-            </div>
+                <i className="hoverable material-icons right" 
+                    onClick={this.handleThreadDelete}>close</i>
+            </React.Fragment>
         )
     }
 }

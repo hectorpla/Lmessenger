@@ -37,14 +37,21 @@ class ConversationThreadTable extends Component<Props> {
             <div className="row">
                 <div> Threads going on.. </div>
                 <div>
-                    {this.props.receivers.map(name => 
-                        <div key={name} onClick={() => this.handleThreadSeleted(name)}
-                            className={name === this.props.activeReceiver ? "selected" : ""}>
-                            <ConversationThreadRow 
-                                receiverName={name} 
-                                onThreadDelete={this.handleThreadDelete}/> 
-                        </div>
-                    )}
+                    {
+                        this.props.receivers.map(name => {
+                            let classNames = ['hoverable', 'thread-row'];
+                            if (name === this.props.activeReceiver) {
+                                classNames.push('teal lighten-5');
+                            }
+                            classNames = classNames.join(' ');
+                            return <div key={name} onClick={() => this.handleThreadSeleted(name)}
+                                className={classNames}>
+                                <ConversationThreadRow 
+                                    receiverName={name} 
+                                    onThreadDelete={this.handleThreadDelete}/> 
+                            </div>
+                        })
+                    }
                 </div>
             </div>
         );
